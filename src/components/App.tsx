@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Footer from './footer/Footer';
+import Header from './header/Header';
 
-export default function App() {
-  return (
-    <>
-      <h1>Hello, world!!!!</h1>
-      <h2>name!</h2>
-      <Footer bar="Bar bar bar" />
-    </>
-  );
+interface IProps {
+  children: React.ReactNode;
 }
+
+const App = ({ children }: IProps) => (
+  <>
+    <Header />
+    {children}
+    <Footer />
+  </>
+);
+
+export default App;

@@ -3,7 +3,7 @@ import React from 'react';
 
 // const Footer:React.FC<{ name: string }> = ({ name }) => <h1>{name}</h1>;
 
-function Footer({ bar = '' }:{ bar:string }): JSX.Element {
+function Footer(): JSX.Element {
   return (
     <footer className="footer">
       <span className="footer__info">
