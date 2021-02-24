@@ -117,6 +117,18 @@ module.exports = (env, options) => {
             },
           ],
         },
+        {
+          test: /\.(woff|woff2|eot|ttf|otf)$/,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: '[name].[ext]',
+                outputPath: 'assets/fonts/',
+              },
+            },
+          ],
+        },
       ],
     },
 
@@ -134,7 +146,15 @@ module.exports = (env, options) => {
       //   'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH),
       // }),
       new CopyPlugin({
-        patterns: [{ from: './src/assets', to: 'assets' }],
+        patterns: [
+          {
+            from: './src/assets',
+            to: 'assets',
+            globOptions: {
+              ignore: ['**/fonts/**'],
+            },
+          },
+        ],
         options: {
           concurrency: 100,
         },
