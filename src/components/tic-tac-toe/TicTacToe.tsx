@@ -5,6 +5,7 @@ import Board from './Board';
 // import Controls from './Controls';
 import calculateWinner from './calculateWinner';
 // import Square from './Square';
+import { SYMBOLS, LENS } from './constants';
 
 import './TicTacToe.scss';
 
@@ -18,6 +19,7 @@ type StateType = {
   xIsNext: boolean,
   stepNumber: number,
   len: number,
+  symbols: [string, string]
 };
 
 class TicTacToe extends Component<{}, StateType> {
@@ -30,9 +32,16 @@ class TicTacToe extends Component<{}, StateType> {
       }],
       xIsNext: true,
       stepNumber: 0,
-      len: 3,
+      len: LENS[0],
+      symbols: SYMBOLS[1],
     };
   }
+
+  handleLenChange: (number) => void = (len: number) => {
+    this.setState({
+      len,
+    });
+  };
 
   handleClick: (i: number) => void = (i) => {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
@@ -42,7 +51,10 @@ class TicTacToe extends Component<{}, StateType> {
 
     if (calculateWinner(squares) || squares[i]) return;
 
-    squares[i] = this.state.xIsNext ? 'X' : 'O';
+    squares[i] = this.state.xIsNext ? this.state.symbols[0] : this.state.symbols[1];
+    // squares[i] = this.state.xIsNext ? 'X' : 'O';
+    // console.log('squares[i] ', squares[i]);
+
     this.setState({
       history: history.concat([{
         squares,
