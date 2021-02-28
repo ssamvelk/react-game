@@ -7,8 +7,9 @@ import './TicTacToe.scss';
 
 type BoardProps = {
   squares: Array<string | null>;
-  onClick: (number) => void;
+  onClick: (arg0: number) => void;
   len: number;
+  lenClick: (arg0: number) => void;
 };
 // { squares: Array<string | null>, onClick: (number) => void }
 
@@ -27,7 +28,20 @@ class Board extends Component<BoardProps, {}> {
   renderSquare = (i:number) => (
     <Square
       value={this.props.squares[i]}
-      onClick={() => this.props.onClick(i)}
+      onClick={(e) => {
+        if ((e.target as HTMLButtonElement).innerHTML === '') {
+          const timer = setTimeout(() => {
+            (e.target as HTMLButtonElement).classList.add('blink');
+          }, 0);
+
+          setTimeout(() => {
+            (e.target as HTMLButtonElement).classList.remove('blink');
+            clearTimeout(timer);
+          }, 500);
+        }
+
+        return this.props.onClick(i);
+      }}
       key={i}
     />
   )
@@ -54,7 +68,7 @@ class Board extends Component<BoardProps, {}> {
     }
     return (
       <>
-        <Controls />
+        <Controls len={len} lenClick={this.props.lenClick} />
         <div className="TicTacToe__board">
           {[arr]}
         </div>
