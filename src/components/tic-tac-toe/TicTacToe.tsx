@@ -19,25 +19,27 @@ type StateType = {
   xIsNext: boolean,
   stepNumber: number,
   len: number,
-  symbols: [string, string]
+  symbols: [string, string],
+  volume: boolean
 };
 
 class TicTacToe extends Component<{}, StateType> {
   constructor(props) {
     super(props);
     this.state = {
-      history: [{
+      history: [{ // массив [{}, {}]
         squares: Array(9).fill(null),
         lastClick: null,
       }],
       xIsNext: true,
       stepNumber: 0,
-      len: LENS[0],
-      symbols: SYMBOLS[1],
+      len: LENS[2],
+      symbols: SYMBOLS[3],
+      volume: true,
     };
   }
 
-  handleLenChange: (number) => void = (len: number) => {
+  handleLenChange: (len: number) => void = (len: number) => {
     this.setState({
       len,
     });
@@ -109,22 +111,22 @@ class TicTacToe extends Component<{}, StateType> {
     if (winner) {
       status = `Победил ${winner}`;
     } else {
-      const win = this.state.xIsNext ? 'X' : 'O';
-      status = `Следующий ход: ${win}`;
+      const win = this.state.xIsNext ? this.state.symbols[0] : this.state.symbols[1];
+      status = `Ход игрока: ${win}`;
     }
 
     return (
       <main className="TicTacToe">
-        {/* <Controls /> */}
         <div className="TicTacToe__game">
           <Board
             squares={current.squares}
             onClick={(i) => this.handleClick(i)}
             len={this.state.len}
+            lenClick={this.handleLenChange}
           />
         </div>
         <div className="TicTacToe__info">
-          <div>{status}</div>
+          <div className="TicTacToe__info-status">{status}</div>
           <ol>{moves}</ol>
         </div>
       </main>

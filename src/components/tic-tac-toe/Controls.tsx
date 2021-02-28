@@ -1,9 +1,15 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useEffect, useState } from 'react';
 
-function Controls() {
+type ControlsProps = {
+  len: number;
+  lenClick: (arg0: number) => void;
+};
+
+function Controls({ len, lenClick }: ControlsProps) {
   // eslint-disable-next-line prefer-const
   let [timer, setTimer] = useState(0);
+  const [lenState, setLen] = useState(len);
   // let [controlClick, setControlClick] = useState();
 
   useEffect(() => {
@@ -12,12 +18,18 @@ function Controls() {
   });
 
   return (
-    <div className="TicTacToe__controls" onClick={() => setTimer(timer + 1)}>
+    <div
+      className="TicTacToe__controls"
+      onClick={() => {
+        setTimer(timer + 1);
+        lenClick(lenState);
+      }}
+    >
       {/* <h1>{`Controls: ${timer}`}</h1> */}
       <label className="TicTacToe__controls-len">
         {' '}
         Len:
-        <select>
+        <select value={lenState} onChange={(e) => { setLen(+e.target.value); }}>
           <option value="3">3</option>
           <option value="4">4</option>
           <option value="5">5</option>
