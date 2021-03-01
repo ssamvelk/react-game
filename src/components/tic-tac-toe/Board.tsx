@@ -10,26 +10,43 @@ type BoardProps = {
   onClick: (arg0: number) => void;
   len: number;
   lenClick: (arg0: number) => void;
+  volume: boolean;
+  symbolsChange: (arg0: number) => void;
+};
+
+// { audioObj: HTMLAudioElement, isWinner: boolean, volume: boolean }
+type BoardState = {
+  audioObj: HTMLAudioElement;
+  isWinner: boolean;
 };
 // { squares: Array<string | null>, onClick: (number) => void }
 
-class Board extends Component<BoardProps, {}> {
+class Board extends Component<BoardProps, BoardState> {
   // eslint-disable-next-line react/static-property-placement
   static defaultProps = {
     len: 3,
+    volume: true,
   };
   // static len = 3;
 
   constructor(props: BoardProps) {
     super(props);
-    this.state = {};
+    this.state = {
+      audioObj: new Audio('/src/assets/space.mp3'),
+      isWinner: false,
+    };
   }
 
   renderSquare = (i:number) => (
     <Square
       value={this.props.squares[i]}
       onClick={(e) => {
+        // const audioObj = new Audio('/src/assets/space.mp3');
         if ((e.target as HTMLButtonElement).innerHTML === '') {
+          if (this.props.volume) {
+            this.state.audioObj.currentTime = 0;
+            this.state.audioObj.play();
+          }
           const timer = setTimeout(() => {
             (e.target as HTMLButtonElement).classList.add('blink');
           }, 0);
@@ -49,10 +66,8 @@ class Board extends Component<BoardProps, {}> {
 
   render = () => {
     const { len } = this.props;
-    // console.log('this.props: ', this.props);
-    // console.log('len: ', len);
 
-    const arr: Array<JSX.Element> = [];
+    const squareArr: Array<JSX.Element> = [];
 
     for (let i = 0; i < len; i += 1) {
       const items: Array<JSX.Element> = [];
@@ -60,7 +75,7 @@ class Board extends Component<BoardProps, {}> {
         // console.log(i * 3 + j);
         items.push(this.renderSquare(i * len + j));
       }
-      arr.push(
+      squareArr.push(
         <div className="TicTacToe__row" key={i}>
           {[...items]}
         </div>,
@@ -68,9 +83,13 @@ class Board extends Component<BoardProps, {}> {
     }
     return (
       <>
-        <Controls len={len} lenClick={this.props.lenClick} />
+        <Controls
+          len={len}
+          lenClick={this.props.lenClick}
+          symbolsChange={this.props.symbolsChange}
+        />
         <div className="TicTacToe__board">
-          {[arr]}
+          {[squareArr]}
         </div>
       </>
     );

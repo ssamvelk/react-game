@@ -1,11 +1,15 @@
 .header {
   min-height: 100px;
-  background-color: #D43728;
+  background-color: #d43728;
   display: flex;
   align-items: stretch;
   justify-content: flex-end;
   padding: 0 50px;
   box-shadow: 1px 1px 10px #777;
+
+  &__song {
+    margin: 25px 5px 0;
+  }
 }
 
 .nav {
@@ -34,5 +38,5 @@
 
 .nav a:hover,
 .nav a.active {
-  background-color: rgba(0,0,0,.2);
+  background-color: rgba(0, 0, 0, 0.2);
 }

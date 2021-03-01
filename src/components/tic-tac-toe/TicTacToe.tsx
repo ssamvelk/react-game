@@ -33,11 +33,17 @@ class TicTacToe extends Component<{}, StateType> {
       }],
       xIsNext: true,
       stepNumber: 0,
-      len: LENS[2],
+      len: LENS[0],
       symbols: SYMBOLS[3],
       volume: true,
     };
   }
+
+  handleSymbolsChange: (arg0: number) => void = (symbolSet: number) => {
+    this.setState({
+      symbols: SYMBOLS[symbolSet],
+    });
+  };
 
   handleLenChange: (len: number) => void = (len: number) => {
     this.setState({
@@ -110,6 +116,8 @@ class TicTacToe extends Component<{}, StateType> {
 
     if (winner) {
       status = `Победил ${winner}`;
+    } else if (this.state.stepNumber === this.state.len ** 2) {
+      status = 'Ничья';
     } else {
       const win = this.state.xIsNext ? this.state.symbols[0] : this.state.symbols[1];
       status = `Ход игрока: ${win}`;
@@ -123,6 +131,7 @@ class TicTacToe extends Component<{}, StateType> {
             onClick={(i) => this.handleClick(i)}
             len={this.state.len}
             lenClick={this.handleLenChange}
+            symbolsChange={this.handleSymbolsChange}
           />
         </div>
         <div className="TicTacToe__info">
