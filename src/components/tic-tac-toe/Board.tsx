@@ -12,6 +12,7 @@ type BoardProps = {
   lenClick: (arg0: number) => void;
   volume: boolean;
   symbolsChange: (arg0: number) => void;
+  fullscreenClick: (e: React.MouseEvent) => void;
 };
 
 // { audioObj: HTMLAudioElement, isWinner: boolean, volume: boolean }
@@ -87,6 +88,7 @@ class Board extends Component<BoardProps, BoardState> {
           len={len}
           lenClick={this.props.lenClick}
           symbolsChange={this.props.symbolsChange}
+          fullscreenClick={this.props.fullscreenClick}
         />
         <div className="TicTacToe__board">
           {[squareArr]}

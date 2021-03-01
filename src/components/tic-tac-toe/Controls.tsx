@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useEffect, useState } from 'react';
 import { SYMBOLS } from './constants';
@@ -7,10 +8,11 @@ type ControlsProps = {
   lenClick: (arg0: number) => void;
   symbolsCount?: number;
   symbolsChange: (arg0: number) => void;
+  fullscreenClick: (e: React.MouseEvent) => void;
 };
 
 function Controls({
-  len, lenClick, symbolsCount, symbolsChange,
+  len, lenClick, symbolsCount, symbolsChange, fullscreenClick,
 }: ControlsProps) {
   // eslint-disable-next-line prefer-const
   // let [timer, setTimer] = useState(0);
@@ -26,10 +28,10 @@ function Controls({
   return (
     <div
       className="TicTacToe__controls"
-      onClick={() => {
-        // setTimer(timer + 1);
-        // lenClick(lenState);
-      }}
+      // onClick={() => {
+      //   // setTimer(timer + 1);
+      //   // lenClick(lenState);
+      // }}
     >
       {/* <h1>{`Controls: ${timer}`}</h1> */}
       <div className="TicTacToe__controls-options">
@@ -66,7 +68,13 @@ function Controls({
       <img className="TicTacToe__controls-button" src="../../assets/images/restart.png" alt="restart" width="30px" />
       <img className="TicTacToe__controls-button" src="../../assets/images/volume.png" alt="volume" width="30px" />
       <img className="TicTacToe__controls-button" src="../../assets/images/robot.png" alt="robot" width="40px" />
-      <img className="TicTacToe__controls-button" src="../../assets/images/fullscreen.png" alt="fullscreen" width="30px" />
+      <img
+        onClick={(e) => { fullscreenClick(e); }}
+        className="TicTacToe__controls-button"
+        src="../../assets/images/fullscreen.png"
+        alt="fullscreen"
+        width="30px"
+      />
     </div>
   );
 }

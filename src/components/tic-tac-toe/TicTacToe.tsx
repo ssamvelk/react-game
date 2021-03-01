@@ -20,10 +20,12 @@ type StateType = {
   stepNumber: number,
   len: number,
   symbols: [string, string],
-  volume: boolean
+  volume: boolean,
 };
 
 class TicTacToe extends Component<{}, StateType> {
+  mainRef = React.createRef();
+
   constructor(props) {
     super(props);
     this.state = {
@@ -38,6 +40,16 @@ class TicTacToe extends Component<{}, StateType> {
       volume: true,
     };
   }
+
+  handleFullscreenClick: (e: React.MouseEvent) => void = (e) => {
+    // console.log('this.mainRef ', this.mainRef);
+
+    if (!document.fullscreenElement) {
+      (this.mainRef.current as HTMLElement).requestFullscreen();
+    } else if (document.fullscreenEnabled) {
+      document.exitFullscreen();
+    }
+  };
 
   handleSymbolsChange: (arg0: number) => void = (symbolSet: number) => {
     this.setState({
@@ -81,13 +93,24 @@ class TicTacToe extends Component<{}, StateType> {
     });
   };
 
+  componentDidUpdate = () => {
+    // const fullscreenElement = document.querySelector('.TicTacToe');
+    // if (this.state.isFullscreen) {
+    //   if (!document.fullscreenElement) {
+    //     fullscreenElement?.requestFullscreen();
+    //   } else if (document.fullscreenEnabled) {
+    //     document.exitFullscreen();
+    //   }
+    // }
+    // console.log('this.state.isFullscreen ', this.state.isFullscreen);
+  };
+
   render() {
     const { history } = this.state;
     // console.dir(this.state.history);
     const current = history[this.state.stepNumber];
-    const winner = calculateWinner(current.squares);
-
     // const lastClick = current.lastClick;
+    const winner = calculateWinner(current.squares);
 
     const moves = history.map((step, move) => {
       const desc = move
@@ -113,7 +136,6 @@ class TicTacToe extends Component<{}, StateType> {
     });
 
     let status;
-
     if (winner) {
       status = `Победил ${winner}`;
     } else if (this.state.stepNumber === this.state.len ** 2) {
@@ -124,7 +146,7 @@ class TicTacToe extends Component<{}, StateType> {
     }
 
     return (
-      <main className="TicTacToe">
+      <main className="TicTacToe" ref={(this.mainRef as React.RefObject<HTMLElement>)}>
         <div className="TicTacToe__game">
           <Board
             squares={current.squares}
@@ -132,6 +154,7 @@ class TicTacToe extends Component<{}, StateType> {
             len={this.state.len}
             lenClick={this.handleLenChange}
             symbolsChange={this.handleSymbolsChange}
+            fullscreenClick={this.handleFullscreenClick}
           />
         </div>
         <div className="TicTacToe__info">
