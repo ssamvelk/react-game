@@ -11,10 +11,11 @@ type ControlsProps = {
   fullscreenClick: (e: React.MouseEvent) => void;
   volume: boolean;
   volumeChange: (volume: boolean) => void;
+  newGameClick: () => void;
 };
 
 function Controls({
-  len, lenClick, symbolsCount, symbolsChange, fullscreenClick, volume, volumeChange,
+  len, lenClick, symbolsCount, symbolsChange, fullscreenClick, volume, volumeChange, newGameClick,
 }: ControlsProps) {
   // eslint-disable-next-line prefer-const
   // let [timer, setTimer] = useState(0);
@@ -39,8 +40,7 @@ function Controls({
       {/* <h1>{`Controls: ${timer}`}</h1> */}
       <div className="TicTacToe__controls-options">
         <label className="TicTacToe__controls-icons">
-          {' '}
-          Icons:
+          {'Icons:  '}
           <select
             value={symbols}
             onChange={(e) => { setSymbols(+e.target.value); symbolsChange(+e.target.value); }}
@@ -52,8 +52,7 @@ function Controls({
           </select>
         </label>
         <label className="TicTacToe__controls-len">
-          {' '}
-          Len:
+          {'Len:  '}
           <select
             value={lenState}
             onChange={(e) => { setLen(+e.target.value); lenClick(+e.target.value); }}
@@ -62,13 +61,23 @@ function Controls({
             <option value="4">4</option>
             <option value="5">5</option>
             <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
           </select>
         </label>
       </div>
 
-      <img className="TicTacToe__controls-button" src="../../assets/images/restart.png" alt="restart" width="30px" />
+      <img
+        onClick={(e) => {
+          newGameClick();
+          (e.target as HTMLElement).classList.add('rotate');
+          setTimeout(() => {
+            (e.target as HTMLElement).classList.remove('rotate');
+          }, 500);
+        }}
+        className="TicTacToe__controls-button"
+        src="../../assets/images/restart.png"
+        alt="restart"
+        width="30px"
+      />
       <img
         onClick={() => { volumeChange(!volumeState); setVolume(!volumeState); }}
         className={`TicTacToe__controls-button${volumeState ? '' : ' TicTacToe__controls-button_disable'}`}

@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import Board from './Board';
 // import Controls from './Controls';
-import { calculateWinner, calcDifficultWinner } from './calculateWinner';
+import calculateWinner from './calculateWinner';
 // import Square from './Square';
 import { SYMBOLS, LENS } from './constants';
 
@@ -21,6 +21,9 @@ type StateType = {
   len: number,
   symbols: [string, string],
   volume: boolean,
+  audioWin: HTMLAudioElement;
+  audioLoose: HTMLAudioElement;
+  isWinner: boolean;
 };
 
 class TicTacToe extends Component<{}, StateType> {
@@ -34,10 +37,13 @@ class TicTacToe extends Component<{}, StateType> {
         lastClick: null,
       }],
       xIsNext: true,
+      isWinner: false,
       stepNumber: 0,
       len: LENS[0],
-      symbols: SYMBOLS[3],
+      symbols: SYMBOLS[0],
       volume: true,
+      audioWin: new Audio('/src/assets/win.mp3'),
+      audioLoose: new Audio('/src/assets/loose.wav'),
     };
   }
 
@@ -99,10 +105,10 @@ class TicTacToe extends Component<{}, StateType> {
       stepNumber: history.length,
     });
     // console.log('lastClick ', this.state.lastClick, i);
-    console.log('current ', current.squares);
+    // console.log('current ', current.squares);
   };
 
-  jumpTo: (number) => void = (step) => {
+  jumpTo: (arg0: number) => void = (step) => {
     this.setState({
       stepNumber: step,
       xIsNext: (step % 2) === 0,
@@ -111,15 +117,19 @@ class TicTacToe extends Component<{}, StateType> {
 
   clearHistory: () => void = () => {
     const { len } = this.state;
-
+    const squares = Array(len ** 2).fill(null);
+    this.jumpTo(0);
     this.setState({
       history: [{ // массив [{}, {}]
-        squares: Array(len ** 2).fill(null),
+        squares,
         lastClick: null,
       }],
     });
   };
-  // componentDidUpdate = () => {  };
+
+  checkWinner: (winner: string| null) => void = (winner) => {
+    if (winner) this.setState({ isWinner: true });
+  };
 
   render() {
     const { history } = this.state;
@@ -127,6 +137,7 @@ class TicTacToe extends Component<{}, StateType> {
     const current = history[this.state.stepNumber];
     // const lastClick = current.lastClick;
     const winner = calculateWinner(current.squares, this.state.len);
+    // if (winner) this.checkWinner(winner);
 
     const moves = history.map((step, move) => {
       const desc = move
@@ -154,6 +165,15 @@ class TicTacToe extends Component<{}, StateType> {
     let status;
     if (winner) {
       status = `Победил ${winner}`;
+      if (this.state.volume) {
+        if (this.state.xIsNext) {
+          this.state.audioLoose.currentTime = 0;
+          this.state.audioLoose.play();
+        } else {
+          this.state.audioWin.currentTime = 0;
+          this.state.audioWin.play();
+        }
+      }
     } else if (this.state.stepNumber === this.state.len ** 2) {
       status = 'Ничья';
     } else {
@@ -173,10 +193,12 @@ class TicTacToe extends Component<{}, StateType> {
             fullscreenClick={this.handleFullscreenClick}
             volume={this.state.volume}
             volumeChange={this.handleVolumeChange}
+            isWinner={this.state.isWinner}
+            newGameClick={this.clearHistory}
           />
         </div>
         <div className="TicTacToe__info">
-          <div className="TicTacToe__info-status">{status}</div>
+          <div className="TicTacToe__info-status" onClick={this.clearHistory}>{status}</div>
           <ol>{moves}</ol>
         </div>
       </main>

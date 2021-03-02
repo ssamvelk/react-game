@@ -89,6 +89,90 @@ function calculateWinner(squares: Array<null | string>, len: number): null | str
       [14, 19, 24],
     ];
   }
+  if (len === 6) {
+    lines = [
+      [0, 1, 2],
+      [1, 2, 3],
+      [2, 3, 4],
+      [3, 4, 5],
+      [6, 7, 8],
+      [7, 8, 9],
+      [8, 9, 10],
+      [9, 10, 11],
+      [12, 13, 14],
+      [13, 14, 15],
+      [14, 15, 16],
+      [15, 16, 17],
+      [18, 19, 20],
+      [19, 20, 21],
+      [20, 21, 22],
+      [21, 22, 23],
+      [24, 25, 26],
+      [25, 26, 27],
+      [26, 27, 28],
+      [27, 28, 29],
+      [30, 31, 32],
+      [31, 32, 33],
+      [32, 33, 34],
+      [33, 34, 35],
+      [0, 6, 12],
+      [6, 12, 18],
+      [12, 18, 24],
+      [18, 24, 30],
+      [1, 7, 13],
+      [7, 13, 19],
+      [13, 19, 25],
+      [19, 25, 31],
+      [2, 8, 14],
+      [8, 14, 20],
+      [14, 20, 26],
+      [20, 26, 32],
+      [3, 9, 15],
+      [9, 15, 21],
+      [15, 21, 27],
+      [21, 27, 33],
+      [4, 10, 16],
+      [10, 16, 22],
+      [16, 22, 28],
+      [22, 28, 34],
+      [5, 11, 17],
+      [11, 17, 23],
+      [17, 23, 29],
+      [23, 29, 35],
+      [3, 10, 17],
+      [2, 9, 16],
+      [9, 16, 23],
+      [1, 8, 15],
+      [8, 15, 22],
+      [15, 22, 29],
+      [0, 7, 14],
+      [7, 14, 21],
+      [14, 21, 28],
+      [21, 28, 35],
+      [6, 13, 20],
+      [13, 20, 27],
+      [20, 27, 34],
+      [12, 19, 26],
+      [19, 26, 33],
+      [18, 25, 32],
+      [2, 7, 12],
+      [3, 8, 13],
+      [8, 13, 18],
+      [4, 9, 14],
+      [9, 14, 19],
+      [14, 19, 24],
+      [5, 10, 15],
+      [10, 15, 20],
+      [15, 20, 25],
+      [20, 25, 30],
+      [11, 16, 21],
+      [16, 21, 26],
+      [21, 26, 31],
+      [17, 22, 27],
+      [22, 27, 32],
+      [23, 28, 33],
+    ];
+  }
 
   for (let i = 0; i < lines.length; i += 1) {
     const [a, b, c] = lines[i];
@@ -100,10 +184,10 @@ function calculateWinner(squares: Array<null | string>, len: number): null | str
 }
 
 // eslint-disable-next-line max-len
-const calcDifficultWinner = (squares: Array<null | string>, len: number, current: number): string | null => {
-  console.log('calcDifficultWinner ');
+// const calcDifficultWinner = (squares: Array<null | string>, len: number, current: number): string | null => {
+//   console.log('calcDifficultWinner ');
 
-  return null;
-};
+//   return null;
+// };
 
-export { calculateWinner, calcDifficultWinner };
+export default calculateWinner;
