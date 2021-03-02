@@ -3,7 +3,8 @@ import './scss/main.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Board from './components/tic-tac-toe/Board';
+// import Board from './components/tic-tac-toe/Board';
+import Rules from './components/tic-tac-toe/Rules';
 
 import App from './components/App';
 import TicTacToe from './components/tic-tac-toe/TicTacToe';
@@ -11,7 +12,7 @@ import TicTacToe from './components/tic-tac-toe/TicTacToe';
 // ReactDOM.render(<App />, document.querySelector('#root'));
 
 function Home() { return (<h1>Home</h1>); }
-function Rules() { return (<h1>Rules</h1>); }
+// function Rules() { return (<h1>Rules</h1>); }
 // function Posts() { return (<h1>Posts</h1>); }
 // function Post() { return (<h1>Post</h1>); }
 function Error() { return (<h1>Error Error Error Error Error</h1>); }
