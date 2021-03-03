@@ -10,7 +10,7 @@ import Statistic from './components/tic-tac-toe/Statistic';
 import App from './components/App';
 import TicTacToe from './components/tic-tac-toe/TicTacToe';
 
-function Error() { return (<h1>Error Error Error Error Error</h1>); }
+function Error() { return (<h1>Error 404</h1>); }
 
 ReactDOM.render((
   <BrowserRouter>
