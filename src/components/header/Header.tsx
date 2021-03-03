@@ -17,7 +17,7 @@ const Header = () => {
       </nav>
 
       <ReactAudioPlayer
-        src="../../assets/song2.mp3"
+        src="assets/song2.mp3"
         className="header__song"
         loop
         // controlsList

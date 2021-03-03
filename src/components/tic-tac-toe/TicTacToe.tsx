@@ -32,7 +32,7 @@ class TicTacToe extends Component<{}, StateType> {
   constructor(props) {
     super(props);
     this.state = {
-      history: [{ // массив [{}, {}]
+      history: [{
         squares: Array(9).fill(null),
         lastClick: null,
       }],
