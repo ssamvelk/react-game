@@ -2,10 +2,9 @@
 /* eslint-disable react/no-access-state-in-setstate */
 import React, { Component } from 'react';
 import Board from './Board';
-// import Controls from './Controls';
-import calculateWinner from './calculateWinner';
-// import Square from './Square';
+import calculateWinner from './extra/calculateWinner';
 import { SYMBOLS, LENS } from './constants';
+import Storage from './extra/store';
 
 import './TicTacToe.scss';
 
@@ -20,6 +19,7 @@ type StateType = {
   stepNumber: number,
   len: number,
   symbols: [string, string],
+  symbolsCount: number,
   volume: boolean,
   audioWin: HTMLAudioElement;
   audioLoose: HTMLAudioElement;
@@ -41,6 +41,7 @@ class TicTacToe extends Component<{}, StateType> {
       stepNumber: 0,
       len: LENS[0],
       symbols: SYMBOLS[0],
+      symbolsCount: 0,
       volume: true,
       audioWin: new Audio('/src/assets/win.mp3'),
       audioLoose: new Audio('/src/assets/loose.wav'),
@@ -62,7 +63,10 @@ class TicTacToe extends Component<{}, StateType> {
   handleSymbolsChange: (arg0: number) => void = (symbolSet) => {
     this.setState({
       symbols: SYMBOLS[symbolSet],
+      symbolsCount: symbolSet,
     });
+    this.clearHistory();
+    Storage.setIcon(Storage.getIcon(this.state.symbolsCount) + 1, this.state.symbolsCount);
   };
 
   handleLenChange: (len: number) => void = (len) => {
@@ -169,13 +173,17 @@ class TicTacToe extends Component<{}, StateType> {
         if (this.state.xIsNext) {
           this.state.audioLoose.currentTime = 0;
           this.state.audioLoose.play();
+          Storage.setField(Storage.getField('loose', this.state.len) + 1, 'loose', this.state.len);
         } else {
           this.state.audioWin.currentTime = 0;
           this.state.audioWin.play();
+          Storage.setField(Storage.getField('win', this.state.len) + 1, 'win', this.state.len);
         }
       }
+      Storage.setField(Storage.getField('all', this.state.len) + 1, 'all', this.state.len);
     } else if (this.state.stepNumber === this.state.len ** 2) {
       status = 'Ничья';
+      Storage.setField(Storage.getField('tie', this.state.len) + 1, 'tie', this.state.len);
     } else {
       const win = this.state.xIsNext ? this.state.symbols[0] : this.state.symbols[1];
       status = `Ход игрока: ${win}`;
