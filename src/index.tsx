@@ -16,14 +16,11 @@ ReactDOM.render((
   <BrowserRouter>
     <App>
       <Switch>
-        <Route exact path="/">
-          <TicTacToe />
-        </Route>
         <Route exact path="/react-game/">
           <TicTacToe />
         </Route>
-        <Route path="/rules" component={Rules} />
-        <Route path="/statistic" component={Statistic} />
+        <Route path="/react-game/rules" component={Rules} />
+        <Route path="/react-game/statistic" component={Statistic} />
         <Route path="*" component={Error} />
       </Switch>
     </App>

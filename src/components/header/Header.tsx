@@ -10,10 +10,10 @@ const Header = () => {
     <header className="header">
       <nav>
         <ul className="nav">
-          <li><NavLink exact to="/">Home</NavLink></li>
-          <li><NavLink exact to="/react-game/">react-game</NavLink></li>
-          <li><NavLink to="/rules">Rules</NavLink></li>
-          <li><NavLink to="/statistic">Statistic</NavLink></li>
+          {/* <li><NavLink exact to="/">Home</NavLink></li> */}
+          <li><NavLink exact to="/react-game/">Home</NavLink></li>
+          <li><NavLink to="/react-game/rules">Rules</NavLink></li>
+          <li><NavLink to="/react-game/statistic">Statistic</NavLink></li>
         </ul>
       </nav>
 
