@@ -17,27 +17,14 @@ type ControlsProps = {
 function Controls({
   len, lenClick, symbolsCount, symbolsChange, fullscreenClick, volume, volumeChange, newGameClick,
 }: ControlsProps) {
-  // eslint-disable-next-line prefer-const
-  // let [timer, setTimer] = useState(0);
   const [lenState, setLen] = useState(len);
   const [symbols, setSymbols] = useState(symbolsCount);
   const [volumeState, setVolume] = useState(volume);
-  // console.log('props: symbols', symbols);
-
-  // useEffect(() => {
-  //   // console.log(timer);
-  //   document.title = `${timer}`;
-  // });
 
   return (
     <div
       className="TicTacToe__controls"
-      // onClick={() => {
-      //   // setTimer(timer + 1);
-      //   // lenClick(lenState);
-      // }}
     >
-      {/* <h1>{`Controls: ${timer}`}</h1> */}
       <div className="TicTacToe__controls-options">
         <label className="TicTacToe__controls-icons">
           {'Icons:  '}
@@ -74,14 +61,14 @@ function Controls({
           }, 500);
         }}
         className="TicTacToe__controls-button"
-        src="../../assets/images/restart.png"
+        src="assets/images/restart.png"
         alt="restart"
         width="30px"
       />
       <img
         onClick={() => { volumeChange(!volumeState); setVolume(!volumeState); }}
         className={`TicTacToe__controls-button${volumeState ? '' : ' TicTacToe__controls-button_disable'}`}
-        src="../../assets/images/volume.png"
+        src="/src/assets/images/volume.png"
         alt="volume"
         width="30px"
       />
@@ -89,7 +76,7 @@ function Controls({
       <img
         onClick={(e) => { fullscreenClick(e); }}
         className="TicTacToe__controls-button TicTacToe__controls-button_disable"
-        src="../../assets/images/fullscreen.png"
+        src="./assets/images/fullscreen.png"
         alt="fullscreen"
         width="30px"
       />

@@ -43,8 +43,8 @@ class TicTacToe extends Component<{}, StateType> {
       symbols: SYMBOLS[0],
       symbolsCount: 0,
       volume: true,
-      audioWin: new Audio('/src/assets/win.mp3'),
-      audioLoose: new Audio('/src/assets/loose.wav'),
+      audioWin: new Audio('assets/win.mp3'),
+      audioLoose: new Audio('./assets/loose.wav'),
     };
   }
 
