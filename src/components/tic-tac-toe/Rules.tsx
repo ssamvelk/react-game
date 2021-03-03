@@ -25,19 +25,19 @@ const Rules = () => (
         <h2>Контролы</h2>
         <ul className="Rules__list">
           <li>
-            <img className="TicTacToe__controls-button" src="../../assets/images/restart.png" alt="restart" width="50px" />
+            <img className="TicTacToe__controls-button" src="assets/images/restart.png" alt="restart" width="50px" />
             - Начать новую игру;
           </li>
           <li>
-            <img className="TicTacToe__controls-button" src="../../assets/images/volume.png" alt="volume" width="50px" />
+            <img className="TicTacToe__controls-button" src="assets/images/volume.png" alt="volume" width="50px" />
             - Вкл\Выкл звуковое сопровождение;
           </li>
           <li>
-            <img className="TicTacToe__controls-button" src="../../assets/images/robot.png" alt="robot" width="50px" />
+            <img className="TicTacToe__controls-button" src="assets/images/robot.png" alt="robot" width="50px" />
             - Вкл\Выкл игрового противника;
           </li>
           <li>
-            <img className="TicTacToe__controls-button" src="../../assets/images/fullscreen.png" alt="fullscreen" width="50px" />
+            <img className="TicTacToe__controls-button" src="assets/images/fullscreen.png" alt="fullscreen" width="50px" />
             - Вкл\Выкл fullscreen режим;
           </li>
         </ul>

@@ -18,9 +18,9 @@ type BoardProps = {
   newGameClick: () => void;
 };
 
-// { audioObj: HTMLAudioElement, isWinner: boolean, volume: boolean }
+// { clickVolume: HTMLAudioElement, isWinner: boolean, volume: boolean }
 type BoardState = {
-  audioObj: HTMLAudioElement;
+  clickVolume: HTMLAudioElement;
   isWinner: boolean;
 };
 // { squares: Array<string | null>, onClick: (number) => void }
@@ -36,7 +36,7 @@ class Board extends Component<BoardProps, BoardState> {
   constructor(props: BoardProps) {
     super(props);
     this.state = {
-      audioObj: new Audio('/src/assets/space.mp3'),
+      clickVolume: new Audio('assets/space.mp3'),
       isWinner: this.props.isWinner,
     };
   }
@@ -45,11 +45,11 @@ class Board extends Component<BoardProps, BoardState> {
     <Square
       value={this.props.squares[i]}
       onClick={(e) => {
-        // const audioObj = new Audio('/src/assets/space.mp3');
+        // const clickVolume = new Audio('/src/assets/space.mp3');
         if ((e.target as HTMLButtonElement).innerHTML === '' && !this.state.isWinner) {
           if (this.props.volume) {
-            this.state.audioObj.currentTime = 0;
-            this.state.audioObj.play();
+            this.state.clickVolume.currentTime = 0;
+            this.state.clickVolume.play();
           }
           const timer = setTimeout(() => {
             (e.target as HTMLButtonElement).classList.add('blink');

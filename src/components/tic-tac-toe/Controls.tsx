@@ -68,15 +68,15 @@ function Controls({
       <img
         onClick={() => { volumeChange(!volumeState); setVolume(!volumeState); }}
         className={`TicTacToe__controls-button${volumeState ? '' : ' TicTacToe__controls-button_disable'}`}
-        src="/src/assets/images/volume.png"
+        src="assets/images/volume.png"
         alt="volume"
         width="30px"
       />
-      <img className="TicTacToe__controls-button TicTacToe__controls-button_disable" src="../../assets/images/robot.png" alt="robot" width="40px" />
+      <img className="TicTacToe__controls-button TicTacToe__controls-button_disable" src="assets/images/robot.png" alt="robot" width="40px" />
       <img
         onClick={(e) => { fullscreenClick(e); }}
         className="TicTacToe__controls-button TicTacToe__controls-button_disable"
-        src="./assets/images/fullscreen.png"
+        src="assets/images/fullscreen.png"
         alt="fullscreen"
         width="30px"
       />

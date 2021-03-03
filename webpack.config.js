@@ -96,7 +96,7 @@ module.exports = (env, options) => {
             {
               loader: 'file-loader',
               options: {
-                name: 'assets/audio/[hash][query].[ext]',
+                name: 'assets/[name].[ext]',
               },
             },
           ],

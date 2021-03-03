@@ -49,8 +49,6 @@ class TicTacToe extends Component<{}, StateType> {
   }
 
   handleFullscreenClick: (e: React.MouseEvent) => void = (e) => {
-    // console.log('e ', (e.target as HTMLElement).classList);
-
     if (!document.fullscreenElement) {
       (this.mainRef.current as HTMLElement).requestFullscreen();
       (e.target as HTMLElement).classList.remove('TicTacToe__controls-button_disable');
