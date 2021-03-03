@@ -122,7 +122,7 @@ class TicTacToe extends Component<{}, StateType> {
     const squares = Array(len ** 2).fill(null);
     this.jumpTo(0);
     this.setState({
-      history: [{ // массив [{}, {}]
+      history: [{
         squares,
         lastClick: null,
       }],
@@ -135,18 +135,14 @@ class TicTacToe extends Component<{}, StateType> {
 
   render() {
     const { history } = this.state;
-    // console.dir(this.state.history);
     const current = history[this.state.stepNumber];
-    // const lastClick = current.lastClick;
     const winner = calculateWinner(current.squares, this.state.len);
-    // if (winner) this.checkWinner(winner);
 
     const moves = history.map((step, move) => {
       const desc = move
         ? `Перейти к ходу #${move}`
         : 'К началу игры';
 
-      // console.log('step ', step);
       const stepClick = step.squares[step.lastClick!];
 
       return (
@@ -163,6 +159,8 @@ class TicTacToe extends Component<{}, StateType> {
         </li>
       );
     });
+    console.log('moves ', moves);
+    // console.log('process.env.NODE_ENV ', process.env.NODE_ENV);
 
     let status;
     if (winner) {
@@ -204,7 +202,7 @@ class TicTacToe extends Component<{}, StateType> {
           />
         </div>
         <div className="TicTacToe__info">
-          <div className="TicTacToe__info-status" onClick={this.clearHistory}>{status}</div>
+          <div className="TicTacToe__info-status">{status}</div>
           <ol>{moves}</ol>
         </div>
       </main>

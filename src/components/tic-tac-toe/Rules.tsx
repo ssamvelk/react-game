@@ -1,6 +1,12 @@
 /* eslint-disable max-len */
 import React from 'react';
 
+import restartImage from '../../assets/images/restart.png';
+import volumeImage from '../../assets/images/volume.png';
+import robotImage from '../../assets/images/robot.png';
+import fullscreenImage from '../../assets/images/fullscreen.png';
+import bgImage from '../../assets/images/220px-Xo_game.svg.png';
+
 const Rules = () => (
   <main className="Rules">
     <h1>Крестики нолики</h1>
@@ -13,7 +19,8 @@ const Rules = () => (
         Игроки по очереди ставят на свободные клетки поля 3х3 знаки (один всегда крестики, другой всегда нолики). Первый, выстроивший в ряд 3 своих фигуры по вертикали, горизонтали или диагонали, выигрывает. Первый ход делает игрок, ставящий крестики.
       </p>
       <div className="Rules__win-image">
-        <img src="assets/images/220px-Xo_game.svg.png" alt="win" />
+        <img src={bgImage} alt="win" />
+        {/* <img src="assets/images/220px-Xo_game.svg.png" alt="win" /> */}
         <span>Выигранная партия в крестики-нолики</span>
       </div>
     </div>
@@ -25,19 +32,19 @@ const Rules = () => (
         <h2>Контролы</h2>
         <ul className="Rules__list">
           <li>
-            <img className="TicTacToe__controls-button" src="assets/images/restart.png" alt="restart" width="50px" />
+            <img className="TicTacToe__controls-button" src={restartImage} alt="restart" width="50px" />
             - Начать новую игру;
           </li>
           <li>
-            <img className="TicTacToe__controls-button" src="assets/images/volume.png" alt="volume" width="50px" />
+            <img className="TicTacToe__controls-button" src={volumeImage} alt="volume" width="50px" />
             - Вкл\Выкл звуковое сопровождение;
           </li>
           <li>
-            <img className="TicTacToe__controls-button" src="assets/images/robot.png" alt="robot" width="50px" />
+            <img className="TicTacToe__controls-button" src={robotImage} alt="robot" width="50px" />
             - Вкл\Выкл игрового противника;
           </li>
           <li>
-            <img className="TicTacToe__controls-button" src="assets/images/fullscreen.png" alt="fullscreen" width="50px" />
+            <img className="TicTacToe__controls-button" src={fullscreenImage} alt="fullscreen" width="50px" />
             - Вкл\Выкл fullscreen режим;
           </li>
         </ul>

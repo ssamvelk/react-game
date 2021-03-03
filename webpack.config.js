@@ -7,7 +7,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
-// const ASSET_PATH = process.env.ASSET_PATH || './';
+const ASSET_PATH = process.env.ASSET_PATH || './';
 
 module.exports = (env, options) => {
   const isProduction = options.mode === 'production';
@@ -57,7 +57,7 @@ module.exports = (env, options) => {
     entry: ['./src/index.tsx'],
     output: {
       publicPath: '',
-      path: path.join(__dirname, './dist'),
+      path: path.resolve(__dirname, './dist'),
       filename: 'script.js',
     },
     resolve: {
@@ -79,13 +79,24 @@ module.exports = (env, options) => {
           test: /\.css$/,
           use: ['style-loader', 'css-loader'],
         },
+        // {
+        //   test: /\.(png)$/,
+        //   use: {
+        //     loader: 'url-loader',
+        //     options: {
+        //       name: 'assets/images/[name].[ext]',
+        //     },
+        //   },
+        // },
         {
           test: /\.(png|svg|jpe?g|gif)$/,
           use: [
             {
               loader: 'file-loader',
               options: {
-                name: 'assets/images/[name].[ext]',
+                name: '[name].[ext]',
+                outputPath: 'assets/images',
+                publicPath: 'assets/images',
               },
             },
           ],
@@ -96,7 +107,9 @@ module.exports = (env, options) => {
             {
               loader: 'file-loader',
               options: {
-                name: 'assets/[name].[ext]',
+                name: '[name].[ext]',
+                outputPath: 'assets',
+                publicPath: 'assets',
               },
             },
           ],
@@ -142,9 +155,9 @@ module.exports = (env, options) => {
     },
 
     plugins: [
-      // new webpack.DefinePlugin({
-      //   'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH),
-      // }),
+      new webpack.DefinePlugin({
+        'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH),
+      }),
       new CopyPlugin({
         patterns: [
           {

@@ -1,7 +1,12 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { SYMBOLS } from './constants';
+
+import restartImage from '../../assets/images/restart.png';
+import volumeImage from '../../assets/images/volume.png';
+import robotImage from '../../assets/images/robot.png';
+import fullscreenImage from '../../assets/images/fullscreen.png';
 
 type ControlsProps = {
   len: number;
@@ -61,7 +66,8 @@ function Controls({
           }, 500);
         }}
         className="TicTacToe__controls-button"
-        src="assets/images/restart.png"
+        src="../../assets/images/restart.png"
+        // src={restartImage}
         alt="restart"
         width="30px"
       />
@@ -69,14 +75,16 @@ function Controls({
         onClick={() => { volumeChange(!volumeState); setVolume(!volumeState); }}
         className={`TicTacToe__controls-button${volumeState ? '' : ' TicTacToe__controls-button_disable'}`}
         src="assets/images/volume.png"
+        // src={volumeImage}
         alt="volume"
         width="30px"
       />
-      <img className="TicTacToe__controls-button TicTacToe__controls-button_disable" src="assets/images/robot.png" alt="robot" width="40px" />
+      <img className="TicTacToe__controls-button TicTacToe__controls-button_disable" src={robotImage} alt="robot" width="40px" />
       <img
         onClick={(e) => { fullscreenClick(e); }}
         className="TicTacToe__controls-button TicTacToe__controls-button_disable"
-        src="assets/images/fullscreen.png"
+        src="../assets/images/fullscreen.png"
+        // src={fullscreenImage}
         alt="fullscreen"
         width="30px"
       />
