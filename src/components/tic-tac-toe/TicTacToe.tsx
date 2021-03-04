@@ -5,6 +5,8 @@ import Board from './Board';
 import calculateWinner from './extra/calculateWinner';
 import { SYMBOLS, LENS } from './constants';
 import Storage from './extra/store';
+import winVolume from '../../assets/win.mp3';
+import looseVolume from '../../assets/loose.wav';
 
 import './TicTacToe.scss';
 
@@ -43,8 +45,8 @@ class TicTacToe extends Component<{}, StateType> {
       symbols: SYMBOLS[0],
       symbolsCount: 0,
       volume: true,
-      audioWin: new Audio('assets/win.mp3'),
-      audioLoose: new Audio('./assets/loose.wav'),
+      audioWin: new Audio(winVolume),
+      audioLoose: new Audio(looseVolume),
     };
   }
 
@@ -159,7 +161,7 @@ class TicTacToe extends Component<{}, StateType> {
         </li>
       );
     });
-    console.log('moves ', moves);
+    // console.log('moves ', moves);
     // console.log('process.env.NODE_ENV ', process.env.NODE_ENV);
 
     let status;

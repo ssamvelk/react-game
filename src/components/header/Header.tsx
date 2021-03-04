@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 import { NavLink } from 'react-router-dom';
 import './Header.scss';
+import song from '../../assets/song2.mp3';
 
 const Header = () => {
   let rap;
@@ -18,10 +19,10 @@ const Header = () => {
       </nav>
 
       <ReactAudioPlayer
-        src="assets/song2.mp3"
+        src={song}
         className="header__song"
         loop
-        // controlsList
+        controlsList
         // autoPlay
         controls
         ref={(element) => { rap = element; }}

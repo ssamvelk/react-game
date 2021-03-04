@@ -4,6 +4,7 @@ import Square from './Square';
 import Controls from './Controls';
 
 import './TicTacToe.scss';
+import space from '../../assets/space.mp3';
 
 type BoardProps = {
   squares: Array<string | null>;
@@ -36,7 +37,7 @@ class Board extends Component<BoardProps, BoardState> {
   constructor(props: BoardProps) {
     super(props);
     this.state = {
-      clickVolume: new Audio('assets/space.mp3'),
+      clickVolume: new Audio(space),
       isWinner: this.props.isWinner,
     };
   }

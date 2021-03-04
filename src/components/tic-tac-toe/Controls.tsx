@@ -66,16 +66,14 @@ function Controls({
           }, 500);
         }}
         className="TicTacToe__controls-button"
-        src="../../assets/images/restart.png"
-        // src={restartImage}
+        src={restartImage}
         alt="restart"
         width="30px"
       />
       <img
         onClick={() => { volumeChange(!volumeState); setVolume(!volumeState); }}
         className={`TicTacToe__controls-button${volumeState ? '' : ' TicTacToe__controls-button_disable'}`}
-        src="assets/images/volume.png"
-        // src={volumeImage}
+        src={volumeImage}
         alt="volume"
         width="30px"
       />
@@ -83,8 +81,7 @@ function Controls({
       <img
         onClick={(e) => { fullscreenClick(e); }}
         className="TicTacToe__controls-button TicTacToe__controls-button_disable"
-        src="../assets/images/fullscreen.png"
-        // src={fullscreenImage}
+        src={fullscreenImage}
         alt="fullscreen"
         width="30px"
       />

@@ -7,8 +7,6 @@ const CopyPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
-const ASSET_PATH = process.env.ASSET_PATH || './';
-
 module.exports = (env, options) => {
   const isProduction = options.mode === 'production';
   const devtool = isProduction ? false : 'eval-cheap-module-source-map';
@@ -29,26 +27,6 @@ module.exports = (env, options) => {
     return loaders;
   };
 
-  const tsLoaders = () => {
-    const loaders = [
-      {
-        loader: 'babel-loader',
-        options: {
-          presets: ['@babel/preset-env', '@babel/preset-typescript'],
-          plugins: ['@babel/plugin-proposal-class-properties'],
-        },
-      },
-      {
-        loader: 'ts-loader',
-      },
-    ];
-
-    if (!isProduction) {
-      loaders.push('eslint-loader');
-    }
-    return loaders;
-  };
-
   const config = {
     mode: isProduction ? 'production' : 'development',
     target: isProduction ? 'browserslist' : 'web',
@@ -56,7 +34,7 @@ module.exports = (env, options) => {
     watch: !isProduction,
     entry: ['./src/index.tsx'],
     output: {
-      publicPath: '',
+      publicPath: '/',
       path: path.resolve(__dirname, './dist'),
       filename: 'script.js',
     },
@@ -79,40 +57,12 @@ module.exports = (env, options) => {
           test: /\.css$/,
           use: ['style-loader', 'css-loader'],
         },
-        // {
-        //   test: /\.(png)$/,
-        //   use: {
-        //     loader: 'url-loader',
-        //     options: {
-        //       name: 'assets/images/[name].[ext]',
-        //     },
-        //   },
-        // },
         {
-          test: /\.(png|svg|jpe?g|gif)$/,
-          use: [
-            {
-              loader: 'file-loader',
-              options: {
-                name: '[name].[ext]',
-                outputPath: 'assets/images',
-                publicPath: 'assets/images',
-              },
-            },
-          ],
-        },
-        {
-          test: /.(ogg|mp3|wav|mpe?g)$/,
-          use: [
-            {
-              loader: 'file-loader',
-              options: {
-                name: '[name].[ext]',
-                outputPath: 'assets',
-                publicPath: 'assets',
-              },
-            },
-          ],
+          test: /\.(png|svg|jpg|jpeg|gif|ogg|mp3|wav|mpe?g)$/i,
+          type: 'asset/resource',
+          generator: {
+            filename: 'static/[hash][ext][query]',
+          },
         },
         {
           test: /\.tsx?$/,
@@ -137,7 +87,7 @@ module.exports = (env, options) => {
               loader: 'file-loader',
               options: {
                 name: '[name].[ext]',
-                outputPath: 'assets/fonts/',
+                outputPath: 'static/fonts/',
               },
             },
           ],
@@ -147,6 +97,7 @@ module.exports = (env, options) => {
 
     devServer: {
       port: 8081,
+      contentBase: './dist',
     },
 
     optimization: {
@@ -155,23 +106,6 @@ module.exports = (env, options) => {
     },
 
     plugins: [
-      new webpack.DefinePlugin({
-        'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH),
-      }),
-      new CopyPlugin({
-        patterns: [
-          {
-            from: './src/assets',
-            to: 'assets',
-            globOptions: {
-              ignore: ['**/fonts/**'],
-            },
-          },
-        ],
-        options: {
-          concurrency: 100,
-        },
-      }),
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
         template: './src/index.html',
@@ -180,11 +114,6 @@ module.exports = (env, options) => {
         filename: 'style.css',
       }),
     ],
-
-    performance: {
-      maxEntrypointSize: 5512000,
-      maxAssetSize: 5512000,
-    },
   };
 
   return config;

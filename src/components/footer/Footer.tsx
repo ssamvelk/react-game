@@ -1,7 +1,6 @@
 import React from 'react';
 import './Footer.scss';
-
-// const Footer:React.FC<{ name: string }> = ({ name }) => <h1>{name}</h1>;
+import logo from '../../assets/images/rs_school_js.svg';
 
 function Footer(): JSX.Element {
   return (
@@ -16,7 +15,7 @@ function Footer(): JSX.Element {
         <span> 2021г.</span>
       </span>
       <a href="https://rs.school/js/">
-        <img className="footer__logo" src="assets/images/rs_school_js.svg" width="100px" alt="logo" />
+        <img className="footer__logo" src={logo} width="100px" alt="logo" />
       </a>
     </footer>
   );

@@ -1,11 +1,11 @@
 /* eslint-disable max-len */
 import React from 'react';
 
+import bgImage from '../../assets/images/220px-Xo_game.svg.png';
 import restartImage from '../../assets/images/restart.png';
 import volumeImage from '../../assets/images/volume.png';
 import robotImage from '../../assets/images/robot.png';
 import fullscreenImage from '../../assets/images/fullscreen.png';
-import bgImage from '../../assets/images/220px-Xo_game.svg.png';
 
 const Rules = () => (
   <main className="Rules">
