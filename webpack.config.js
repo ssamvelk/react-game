@@ -32,11 +32,12 @@ module.exports = (env, options) => {
     target: isProduction ? 'browserslist' : 'web',
     devtool,
     watch: !isProduction,
-    entry: ['./src/index.tsx'],
+    entry: './src/index.tsx',
     output: {
-      publicPath: '/',
-      path: path.resolve(__dirname, './dist'),
-      filename: 'script.js',
+      publicPath: isProduction ? '' : '/',
+      path: path.resolve(__dirname, 'dist'),
+      // filename: 'script.js',
+      filename: 'bundle.js',
     },
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx'],
@@ -97,7 +98,7 @@ module.exports = (env, options) => {
 
     devServer: {
       port: 8081,
-      contentBase: './dist',
+      // contentBase: './dist',
     },
 
     optimization: {
