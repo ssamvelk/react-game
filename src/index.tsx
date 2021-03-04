@@ -19,6 +19,7 @@ ReactDOM.render((
         <Route exact path="/react-game/">
           <TicTacToe />
         </Route>
+        <Route exact path="/" component={TicTacToe} />
         <Route path="/react-game/rules" component={Rules} />
         <Route path="/react-game/statistic" component={Statistic} />
         <Route path="*" component={Error} />

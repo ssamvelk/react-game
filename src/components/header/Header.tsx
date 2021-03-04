@@ -22,7 +22,7 @@ const Header = () => {
         src={song}
         className="header__song"
         loop
-        controlsList
+        // controlsList
         // autoPlay
         controls
         ref={(element) => { rap = element; }}

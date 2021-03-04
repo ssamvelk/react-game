@@ -34,14 +34,18 @@ class TicTacToe extends Component<{}, StateType> {
   constructor(props) {
     super(props);
     this.state = {
-      history: [{
-        squares: Array(9).fill(null),
-        lastClick: null,
-      }],
-      xIsNext: true,
+      // history: [{
+      //   squares: Array(9).fill(null),
+      //   lastClick: null,
+      // }],
+      history: Storage.getGameHistory(),
+      xIsNext: !!(((Storage.getGameHistory().length - 1) % 2) === 0),
+      // xIsNext: true,
       isWinner: false,
-      stepNumber: 0,
-      len: LENS[0],
+      stepNumber: Storage.getGameHistory().length - 1,
+      // stepNumber: 0,
+      len: Storage.getLen(),
+      // len: LENS[0],
       symbols: SYMBOLS[0],
       symbolsCount: 0,
       volume: true,
@@ -70,12 +74,18 @@ class TicTacToe extends Component<{}, StateType> {
   };
 
   handleLenChange: (len: number) => void = (len) => {
+    Storage.saveGameHistory([{
+      squares: Array(len ** 2).fill(null),
+      lastClick: null,
+    }]);
+    Storage.setLen(len);
     this.setState({
       len,
-      history: [{ // массив [{}, {}]
-        squares: Array(len ** 2).fill(null),
-        lastClick: null,
-      }],
+      history: Storage.getGameHistory(),
+      // history: [{ // массив [{}, {}]
+      //   squares: Array(len ** 2).fill(null),
+      //   lastClick: null,
+      // }],
       stepNumber: 0,
     });
     // this.clearHistory();
@@ -99,13 +109,19 @@ class TicTacToe extends Component<{}, StateType> {
     squares[i] = this.state.xIsNext ? this.state.symbols[0] : this.state.symbols[1];
     // squares[i] = this.state.xIsNext ? 'X' : 'O';
     // console.log('squares[i] ', squares[i]);
+    Storage.saveGameHistory(history.concat([{
+      squares,
+      lastClick: i,
+    }]));
 
     this.setState({
-      history: history.concat([{
-        squares,
-        lastClick: i,
-      }]),
-      xIsNext: !this.state.xIsNext,
+      // history: history.concat([{
+      //   squares,
+      //   lastClick: i,
+      // }]),
+      history: Storage.getGameHistory(),
+      xIsNext: !!(((Storage.getGameHistory().length - 1) % 2) === 0),
+      // xIsNext: !this.state.xIsNext,
       stepNumber: history.length,
     });
     // console.log('lastClick ', this.state.lastClick, i);
@@ -123,11 +139,13 @@ class TicTacToe extends Component<{}, StateType> {
     const { len } = this.state;
     const squares = Array(len ** 2).fill(null);
     this.jumpTo(0);
+    Storage.saveGameHistory([{
+      squares,
+      lastClick: null,
+    }]);
     this.setState({
-      history: [{
-        squares,
-        lastClick: null,
-      }],
+      history: Storage.getGameHistory(),
+      xIsNext: !!(((Storage.getGameHistory().length - 1) % 2) === 0),
     });
   };
 
@@ -135,7 +153,10 @@ class TicTacToe extends Component<{}, StateType> {
     if (winner) this.setState({ isWinner: true });
   };
 
+  // componentDidMount() { }
+
   render() {
+    // const history = Storage.getGameHistory();
     const { history } = this.state;
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares, this.state.len);
@@ -161,8 +182,6 @@ class TicTacToe extends Component<{}, StateType> {
         </li>
       );
     });
-    // console.log('moves ', moves);
-    // console.log('process.env.NODE_ENV ', process.env.NODE_ENV);
 
     let status;
     if (winner) {
@@ -186,6 +205,11 @@ class TicTacToe extends Component<{}, StateType> {
       const win = this.state.xIsNext ? this.state.symbols[0] : this.state.symbols[1];
       status = `Ход игрока: ${win}`;
     }
+
+    console.log('---------------');
+    // console.log('moves ', moves);
+    console.log('history ', this.state.history);
+    // console.log('---------------');
 
     return (
       <main className="TicTacToe" ref={(this.mainRef as React.RefObject<HTMLElement>)}>
