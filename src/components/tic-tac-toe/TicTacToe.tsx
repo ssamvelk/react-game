@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/no-access-state-in-setstate */
 import React, { Component } from 'react';
@@ -53,6 +54,31 @@ class TicTacToe extends Component<{}, StateType> {
       audioLoose: new Audio(looseVolume),
     };
   }
+
+  // componentDidMount() { this.addHotCases(); }
+
+  addHotCases: (event: React.KeyboardEvent) => void = (e) => {
+    console.log('addHotCases');
+    console.log(e.code, e.code);
+    if (e.code === 'KeyV') {
+      const vol = !this.state.volume;
+      this.handleVolumeChange(vol);
+      (this.mainRef.current as HTMLElement).children[0].children[0].children[2].classList.toggle('TicTacToe__controls-button_disable');
+    }
+    if (e.code === 'KeyN' && e.shiftKey) {
+      // this.clearHistory();
+      // eslint-disable-next-line max-len
+      ((this.mainRef.current as HTMLElement).children[0].children[0].children[1] as HTMLElement).click();
+    }
+    if (e.code === 'KeyF' && e.shiftKey) {
+      ((this.mainRef.current as HTMLElement)
+        .children[0].children[0].children[4] as HTMLElement).click();
+    }
+    if (e.code === 'KeyR') {
+      ((this.mainRef.current as HTMLElement)
+        .children[0].children[0].children[3] as HTMLElement).click();
+    }
+  };
 
   handleFullscreenClick: (e: React.MouseEvent) => void = (e) => {
     if (!document.fullscreenElement) {
@@ -153,8 +179,6 @@ class TicTacToe extends Component<{}, StateType> {
     if (winner) this.setState({ isWinner: true });
   };
 
-  // componentDidMount() { }
-
   render() {
     // const history = Storage.getGameHistory();
     const { history } = this.state;
@@ -212,7 +236,7 @@ class TicTacToe extends Component<{}, StateType> {
     // console.log('---------------');
 
     return (
-      <main className="TicTacToe" ref={(this.mainRef as React.RefObject<HTMLElement>)}>
+      <main className="TicTacToe" ref={(this.mainRef as React.RefObject<HTMLElement>)} onKeyPress={this.addHotCases}>
         <div className="TicTacToe__game">
           <Board
             squares={current.squares}

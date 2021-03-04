@@ -29,28 +29,28 @@ const Rules = () => (
 
     <div className="Rules__controls">
       <div>
-        <h2>Контролы</h2>
+        <h2>Контролы (хоткейсы)</h2>
         <ul className="Rules__list">
           <li>
             <img className="TicTacToe__controls-button" src={restartImage} alt="restart" width="50px" />
-            - Начать новую игру;
+            - Начать новую игру (Shift + N);
           </li>
           <li>
             <img className="TicTacToe__controls-button" src={volumeImage} alt="volume" width="50px" />
-            - Вкл\Выкл звуковое сопровождение;
+            - Вкл\Выкл звуковое сопровождение (V);
           </li>
           <li>
             <img className="TicTacToe__controls-button" src={robotImage} alt="robot" width="50px" />
-            - Вкл\Выкл игрового противника;
+            - Вкл\Выкл игрового противника; (R)
           </li>
           <li>
             <img className="TicTacToe__controls-button" src={fullscreenImage} alt="fullscreen" width="50px" />
-            - Вкл\Выкл fullscreen режим;
+            - Вкл\Выкл fullscreen режим; (Shift + F)
           </li>
         </ul>
       </div>
       <div>
-        <h2>Горячие клавиши</h2>
+        <h2>Управление</h2>
         <ul className="Rules__list">
           <li>↑ - Движение вверх по полю;</li>
           <li>⟶ - Движение вправо по полю;</li>
