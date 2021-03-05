@@ -18,9 +18,9 @@ type BoardProps = {
   isWinner: boolean;
   newGameClick: () => void;
   robotClick: (e: React.MouseEvent) => void;
+  AutoplayClick: (e: React.MouseEvent) => void;
 };
 
-// { clickVolume: HTMLAudioElement, isWinner: boolean, volume: boolean }
 type BoardState = {
   clickVolume: HTMLAudioElement;
   isWinner: boolean;
@@ -45,10 +45,7 @@ class Board extends Component<BoardProps, BoardState> {
     <Square
       value={this.props.squares[i]}
       onClick={(e) => {
-        // const clickVolume = new Audio('/src/assets/space.mp3');
         if ((e.target as HTMLButtonElement).innerHTML === '' && !this.state.isWinner) {
-          console.log('this.state.isWinner ', this.state.isWinner);
-
           if (this.props.volume) {
             this.state.clickVolume.currentTime = 0;
             this.state.clickVolume.play();
@@ -78,7 +75,6 @@ class Board extends Component<BoardProps, BoardState> {
     for (let i = 0; i < len; i += 1) {
       const items: Array<JSX.Element> = [];
       for (let j = 0; j < len; j += 1) {
-        // console.log(i * 3 + j);
         items.push(this.renderSquare(i * len + j));
       }
       squareArr.push(
@@ -98,6 +94,7 @@ class Board extends Component<BoardProps, BoardState> {
           volume={this.props.volume}
           newGameClick={this.props.newGameClick}
           robotClick={this.props.robotClick}
+          AutoplayClick={this.props.AutoplayClick}
         />
         <div className="TicTacToe__board">
           {[squareArr]}

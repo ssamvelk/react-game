@@ -19,6 +19,7 @@ type ControlsProps = {
   volumeChange: (volume: boolean) => void;
   newGameClick: () => void;
   robotClick: (e: React.MouseEvent) => void;
+  AutoplayClick: (e: React.MouseEvent) => void;
 };
 
 function Controls({
@@ -31,6 +32,7 @@ function Controls({
   volumeChange,
   newGameClick,
   robotClick,
+  AutoplayClick,
 }: ControlsProps) {
   const [lenState, setLen] = useState(len);
   const [symbols, setSymbols] = useState(symbolsCount);
@@ -81,10 +83,11 @@ function Controls({
         width="30px"
       />
       <img
-        onClick={(e) => {}}
+        onClick={(e) => { AutoplayClick(e); }}
         className="TicTacToe__controls-button  TicTacToe__controls-button_disable"
         src={autoplayImage}
         alt="autoplay"
+        data-name="autoplay"
         width="30px"
       />
       <img
