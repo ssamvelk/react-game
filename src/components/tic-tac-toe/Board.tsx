@@ -17,6 +17,7 @@ type BoardProps = {
   volumeChange: (volume: boolean) => void;
   isWinner: boolean;
   newGameClick: () => void;
+  robotClick: (e: React.MouseEvent) => void;
 };
 
 // { clickVolume: HTMLAudioElement, isWinner: boolean, volume: boolean }
@@ -96,6 +97,7 @@ class Board extends Component<BoardProps, BoardState> {
           volumeChange={this.props.volumeChange}
           volume={this.props.volume}
           newGameClick={this.props.newGameClick}
+          robotClick={this.props.robotClick}
         />
         <div className="TicTacToe__board">
           {[squareArr]}

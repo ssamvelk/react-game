@@ -6,6 +6,7 @@ import restartImage from '../../assets/images/restart.png';
 import volumeImage from '../../assets/images/volume.png';
 import robotImage from '../../assets/images/robot.png';
 import fullscreenImage from '../../assets/images/fullscreen.png';
+import autoplayImage from '../../assets/images/autoplay.png';
 
 const Rules = () => (
   <main className="Rules">
@@ -46,6 +47,10 @@ const Rules = () => (
           <li>
             <img className="TicTacToe__controls-button" src={fullscreenImage} alt="fullscreen" width="50px" />
             - Вкл\Выкл fullscreen режим; (Shift + F)
+          </li>
+          <li>
+            <img className="TicTacToe__controls-button" src={autoplayImage} alt="fullscreen" width="50px" />
+            - Вкл\Выкл режим автопроигрывание игры; (Shift + A)
           </li>
         </ul>
       </div>

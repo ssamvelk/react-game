@@ -1,3 +1,6 @@
+/* eslint-disable prefer-destructuring */
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-return-assign */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/no-access-state-in-setstate */
@@ -27,6 +30,7 @@ type StateType = {
   audioWin: HTMLAudioElement;
   audioLoose: HTMLAudioElement;
   isWinner: boolean;
+  isRobot: boolean;
 };
 
 class TicTacToe extends Component<{}, StateType> {
@@ -35,40 +39,42 @@ class TicTacToe extends Component<{}, StateType> {
   constructor(props) {
     super(props);
     this.state = {
-      // history: [{
-      //   squares: Array(9).fill(null),
-      //   lastClick: null,
-      // }],
       history: Storage.getGameHistory(),
       xIsNext: !!(((Storage.getGameHistory().length - 1) % 2) === 0),
-      // xIsNext: true,
       isWinner: false,
       stepNumber: Storage.getGameHistory().length - 1,
-      // stepNumber: 0,
       len: Storage.getLen(),
-      // len: LENS[0],
       symbols: SYMBOLS[0],
       symbolsCount: 0,
       volume: true,
       audioWin: new Audio(winVolume),
       audioLoose: new Audio(looseVolume),
+      isRobot: false,
     };
   }
 
   // componentDidMount() { this.addHotCases(); }
+  handleRobotClick: (e: React.MouseEvent) => void = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    // if (e.currentTarget.)
+    // console.log('e.target ', (e.target as HTMLElement));
+    if ((e.target as HTMLElement).hasAttribute('data-name') && (e.target as HTMLElement).dataset.name === 'robot') {
+      (e.target as HTMLElement).classList.toggle('TicTacToe__controls-button_disable');
+      this.setState({ isRobot: !this.state.isRobot });
+    }
+  };
 
   addHotCases: (event: React.KeyboardEvent) => void = (e) => {
-    console.log('addHotCases');
-    console.log(e.code, e.code);
     if (e.code === 'KeyV') {
       const vol = !this.state.volume;
       this.handleVolumeChange(vol);
-      (this.mainRef.current as HTMLElement).children[0].children[0].children[2].classList.toggle('TicTacToe__controls-button_disable');
+      (this.mainRef.current as HTMLElement)
+        .children[0].children[0].children[2].classList.toggle('TicTacToe__controls-button_disable');
     }
     if (e.code === 'KeyN' && e.shiftKey) {
-      // this.clearHistory();
-      // eslint-disable-next-line max-len
-      ((this.mainRef.current as HTMLElement).children[0].children[0].children[1] as HTMLElement).click();
+      ((this.mainRef.current as HTMLElement)
+        .children[0].children[0].children[1] as HTMLElement).click();
     }
     if (e.code === 'KeyF' && e.shiftKey) {
       ((this.mainRef.current as HTMLElement)
@@ -108,13 +114,8 @@ class TicTacToe extends Component<{}, StateType> {
     this.setState({
       len,
       history: Storage.getGameHistory(),
-      // history: [{ // массив [{}, {}]
-      //   squares: Array(len ** 2).fill(null),
-      //   lastClick: null,
-      // }],
       stepNumber: 0,
     });
-    // this.clearHistory();
   };
 
   handleVolumeChange: (volume: boolean) => void = (volume) => {
@@ -128,30 +129,80 @@ class TicTacToe extends Component<{}, StateType> {
     const current = history[history.length - 1];
 
     const squares = [...current.squares];
-    // const squares = this.state.squares.slice();
 
     if (calculateWinner(squares, this.state.len) || squares[i]) return;
 
     squares[i] = this.state.xIsNext ? this.state.symbols[0] : this.state.symbols[1];
-    // squares[i] = this.state.xIsNext ? 'X' : 'O';
-    // console.log('squares[i] ', squares[i]);
+
     Storage.saveGameHistory(history.concat([{
       squares,
       lastClick: i,
     }]));
 
     this.setState({
-      // history: history.concat([{
-      //   squares,
-      //   lastClick: i,
-      // }]),
       history: Storage.getGameHistory(),
       xIsNext: !!(((Storage.getGameHistory().length - 1) % 2) === 0),
-      // xIsNext: !this.state.xIsNext,
       stepNumber: history.length,
     });
-    // console.log('lastClick ', this.state.lastClick, i);
-    // console.log('current ', current.squares);
+
+    this.robotPlay();
+  };
+
+  robotPlay: () => void = () => {
+    if (this.state.isRobot) {
+      setTimeout(() => {
+        const history = this.state.history.slice(0, this.state.stepNumber + 1);
+        const current = history[history.length - 1];
+        const squares = [...current.squares];
+
+        // const allPositions = Array(this.state.len ** 2).map((el, i) => el = i);
+        const allFreePositions: number[] = [];
+        squares.forEach((el, i) => {
+          if ((el === null)) allFreePositions.push(i);
+        });
+        const randomClick = Math.floor(Math.random() * allFreePositions.length);
+        const clicks = history.map((elem) => elem.lastClick);
+
+        console.log('ROBOT!!!!!!!!!!!!!!!!!!!!');
+        console.log('history ', history);
+        console.log('current ', current);
+        console.log('squares ', squares);
+        console.log('allFreePositions ', allFreePositions);
+        console.log('randomClick position ', randomClick);
+        console.log('Всего сделано ходов ', history.length - 1);
+        console.log('clicks ', clicks);
+
+        const newCurrentSquare = [...current.squares].map((el, i) => {
+          if (i === allFreePositions[randomClick]) {
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+            this.state.xIsNext ? el = this.state.symbols[0] : el = this.state.symbols[1];
+          }
+          return el;
+        });
+        console.log('newCurrentSquare ', newCurrentSquare);
+        history.push({ squares: newCurrentSquare, lastClick: allFreePositions[randomClick] });
+        console.log('----history ', history);
+
+        Storage.saveGameHistory(history.concat([{
+          squares: newCurrentSquare,
+          lastClick: allFreePositions[randomClick],
+        }]));
+
+        this.setState({
+          history: Storage.getGameHistory(),
+          // xIsNext: !this.state.xIsNext, // !!(((Storage.getGameHistory().length - 1) % 2) === 0)
+          stepNumber: history.length,
+        });
+
+        // this.setState({
+        //   history,
+        // });
+
+        // const qq = ((this.mainRef.current as HTMLElement)
+        //   .children[0].children[1]);
+        // console.log('childrens ', qq);
+      }, 1000);
+    }
   };
 
   jumpTo: (arg0: number) => void = (step) => {
@@ -180,7 +231,6 @@ class TicTacToe extends Component<{}, StateType> {
   };
 
   render() {
-    // const history = Storage.getGameHistory();
     const { history } = this.state;
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares, this.state.len);
@@ -230,13 +280,8 @@ class TicTacToe extends Component<{}, StateType> {
       status = `Ход игрока: ${win}`;
     }
 
-    console.log('---------------');
-    // console.log('moves ', moves);
-    console.log('history ', this.state.history);
-    // console.log('---------------');
-
     return (
-      <main className="TicTacToe" ref={(this.mainRef as React.RefObject<HTMLElement>)} onKeyPress={this.addHotCases}>
+      <main className="TicTacToe" ref={(this.mainRef as React.RefObject<HTMLElement>)} onKeyPress={this.addHotCases} onClick={this.handleRobotClick}>
         <div className="TicTacToe__game">
           <Board
             squares={current.squares}
@@ -249,6 +294,7 @@ class TicTacToe extends Component<{}, StateType> {
             volumeChange={this.handleVolumeChange}
             isWinner={this.state.isWinner}
             newGameClick={this.clearHistory}
+            robotClick={this.handleRobotClick}
           />
         </div>
         <div className="TicTacToe__info">

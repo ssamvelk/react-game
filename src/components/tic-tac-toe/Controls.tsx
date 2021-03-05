@@ -7,6 +7,7 @@ import restartImage from '../../assets/images/restart.png';
 import volumeImage from '../../assets/images/volume.png';
 import robotImage from '../../assets/images/robot.png';
 import fullscreenImage from '../../assets/images/fullscreen.png';
+import autoplayImage from '../../assets/images/autoplay.png';
 
 type ControlsProps = {
   len: number;
@@ -17,10 +18,19 @@ type ControlsProps = {
   volume: boolean;
   volumeChange: (volume: boolean) => void;
   newGameClick: () => void;
+  robotClick: (e: React.MouseEvent) => void;
 };
 
 function Controls({
-  len, lenClick, symbolsCount, symbolsChange, fullscreenClick, volume, volumeChange, newGameClick,
+  len,
+  lenClick,
+  symbolsCount,
+  symbolsChange,
+  fullscreenClick,
+  volume,
+  volumeChange,
+  newGameClick,
+  robotClick,
 }: ControlsProps) {
   const [lenState, setLen] = useState(len);
   const [symbols, setSymbols] = useState(symbolsCount);
@@ -71,13 +81,20 @@ function Controls({
         width="30px"
       />
       <img
+        onClick={(e) => {}}
+        className="TicTacToe__controls-button  TicTacToe__controls-button_disable"
+        src={autoplayImage}
+        alt="autoplay"
+        width="30px"
+      />
+      <img
         onClick={() => { volumeChange(!volumeState); setVolume(!volumeState); }}
         className={`TicTacToe__controls-button${volumeState ? '' : ' TicTacToe__controls-button_disable'}`}
         src={volumeImage}
         alt="volume"
         width="30px"
       />
-      <img className="TicTacToe__controls-button TicTacToe__controls-button_disable" src={robotImage} alt="robot" width="40px" />
+      <img className="TicTacToe__controls-button TicTacToe__controls-button_disable" src={robotImage} alt="robot" width="40px" onClick={(e) => { robotClick(e); }} data-name="robot" />
       <img
         onClick={(e) => { fullscreenClick(e); }}
         className="TicTacToe__controls-button TicTacToe__controls-button_disable"
