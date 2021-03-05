@@ -25,7 +25,6 @@ type BoardState = {
   clickVolume: HTMLAudioElement;
   isWinner: boolean;
 };
-// { squares: Array<string | null>, onClick: (number) => void }
 
 class Board extends Component<BoardProps, BoardState> {
   // eslint-disable-next-line react/static-property-placement
@@ -33,7 +32,6 @@ class Board extends Component<BoardProps, BoardState> {
     len: 3,
     volume: true,
   };
-  // static len = 3;
 
   constructor(props: BoardProps) {
     super(props);
@@ -49,6 +47,8 @@ class Board extends Component<BoardProps, BoardState> {
       onClick={(e) => {
         // const clickVolume = new Audio('/src/assets/space.mp3');
         if ((e.target as HTMLButtonElement).innerHTML === '' && !this.state.isWinner) {
+          console.log('this.state.isWinner ', this.state.isWinner);
+
           if (this.props.volume) {
             this.state.clickVolume.currentTime = 0;
             this.state.clickVolume.play();

@@ -57,8 +57,7 @@ class TicTacToe extends Component<{}, StateType> {
   handleRobotClick: (e: React.MouseEvent) => void = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    // if (e.currentTarget.)
-    // console.log('e.target ', (e.target as HTMLElement));
+
     if ((e.target as HTMLElement).hasAttribute('data-name') && (e.target as HTMLElement).dataset.name === 'robot') {
       (e.target as HTMLElement).classList.toggle('TicTacToe__controls-button_disable');
       this.setState({ isRobot: !this.state.isRobot });
@@ -130,9 +129,11 @@ class TicTacToe extends Component<{}, StateType> {
 
     const squares = [...current.squares];
 
-    if (calculateWinner(squares, this.state.len) || squares[i]) return;
+    const win = calculateWinner(squares, this.state.len);
+    if (win || squares[i]) return;
 
     squares[i] = this.state.xIsNext ? this.state.symbols[0] : this.state.symbols[1];
+    const isWin = !!calculateWinner(squares, this.state.len);
 
     Storage.saveGameHistory(history.concat([{
       squares,
@@ -143,12 +144,16 @@ class TicTacToe extends Component<{}, StateType> {
       history: Storage.getGameHistory(),
       xIsNext: !!(((Storage.getGameHistory().length - 1) % 2) === 0),
       stepNumber: history.length,
+      isWinner: isWin,
     });
 
-    this.robotPlay();
+    if (isWin === false) {
+      this.robotPlay();
+    }
   };
 
   robotPlay: () => void = () => {
+    if (this.state.isWinner) return;
     if (this.state.isRobot) {
       setTimeout(() => {
         const history = this.state.history.slice(0, this.state.stepNumber + 1);
@@ -161,16 +166,16 @@ class TicTacToe extends Component<{}, StateType> {
           if ((el === null)) allFreePositions.push(i);
         });
         const randomClick = Math.floor(Math.random() * allFreePositions.length);
-        const clicks = history.map((elem) => elem.lastClick);
+        // const clicks = history.map((elem) => elem.lastClick);
 
-        console.log('ROBOT!!!!!!!!!!!!!!!!!!!!');
-        console.log('history ', history);
-        console.log('current ', current);
-        console.log('squares ', squares);
-        console.log('allFreePositions ', allFreePositions);
-        console.log('randomClick position ', randomClick);
-        console.log('Всего сделано ходов ', history.length - 1);
-        console.log('clicks ', clicks);
+        // console.log('ROBOT!!!!!!!!!!!!!!!!!!!!');
+        // console.log('history ', history);
+        // console.log('current ', current);
+        // console.log('squares ', squares);
+        // console.log('allFreePositions ', allFreePositions);
+        // console.log('randomClick position ', randomClick);
+        // console.log('Всего сделано ходов ', history.length - 1);
+        // console.log('clicks ', clicks);
 
         const newCurrentSquare = [...current.squares].map((el, i) => {
           if (i === allFreePositions[randomClick]) {
@@ -179,9 +184,9 @@ class TicTacToe extends Component<{}, StateType> {
           }
           return el;
         });
-        console.log('newCurrentSquare ', newCurrentSquare);
-        history.push({ squares: newCurrentSquare, lastClick: allFreePositions[randomClick] });
-        console.log('----history ', history);
+        // console.log('newCurrentSquare ', newCurrentSquare);
+        // history.push({ squares: newCurrentSquare, lastClick: allFreePositions[randomClick] });
+        // console.log('----history ', history);
 
         Storage.saveGameHistory(history.concat([{
           squares: newCurrentSquare,
@@ -190,7 +195,8 @@ class TicTacToe extends Component<{}, StateType> {
 
         this.setState({
           history: Storage.getGameHistory(),
-          // xIsNext: !this.state.xIsNext, // !!(((Storage.getGameHistory().length - 1) % 2) === 0)
+          xIsNext: !this.state.xIsNext, // !!(((Storage.getGameHistory().length - 1) % 2) === 0)
+          // stepNumber: this.state.stepNumber + 1,
           stepNumber: history.length,
         });
 

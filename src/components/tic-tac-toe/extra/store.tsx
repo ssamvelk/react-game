@@ -7,6 +7,15 @@ type HistoryType = {
   lastClick: number | null,
 };
 class Storage {
+  static setWinner(value:boolean) {
+    localStorage.setItem('TicTacToe_isWinner', JSON.stringify(value));
+  }
+
+  static getWinner() {
+    const localField = localStorage.getItem('TicTacToe_isWinner');
+    return !!localField;
+  }
+
   static getField(field:FieldType, fieldLen: number) {
     const localField = localStorage.getItem(`TicTacToe_${field}_${fieldLen}`);
     return !localField ? 0 : +localField;
